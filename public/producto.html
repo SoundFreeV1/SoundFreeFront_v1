@@ -27,6 +27,34 @@
         document.getElementById("imagen").style.backgroundImage = `url('${data.imagen_url}')`;
         document.getElementById("descripcion").textContent = data.descripcion;
         document.getElementById("categoria").textContent = `Categoría: ${data.categoria}`;
+
+        cargarRelacionados(data.categoria, data.slug);
+      }
+
+      async function cargarRelacionados(categoria, slugActual) {
+        const { data, error } = await supabase
+          .from("productos")
+          .select("*")
+          .eq("categoria", categoria)
+          .neq("slug", slugActual)
+          .limit(3);
+
+        if (error || !data.length) return;
+
+        const contenedor = document.getElementById("relacionados");
+        data.forEach((p) => {
+          const card = document.createElement("a");
+          card.href = `producto.html?producto=${p.slug}`;
+          card.className = "flex flex-col gap-2 rounded-lg w-52";
+          card.innerHTML = `
+            <div class="aspect-square rounded-xl bg-cover bg-center" style="background-image: url('${p.imagen_url}')"></div>
+            <p class="text-sm font-medium text-[#101418]">${p.nombre}</p>
+            <p class="text-xs text-[#5c738a]">${p.descripcion}</p>
+          `;
+          contenedor.appendChild(card);
+        });
+
+        document.getElementById("seccion-relacionados").classList.remove("hidden");
       }
 
       document.addEventListener("DOMContentLoaded", cargarProducto);
@@ -61,11 +89,19 @@
       </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-10" id="contenido">
-      <h1 id="nombre" class="text-3xl font-bold mb-4">Cargando...</h1>
-      <div id="imagen" class="aspect-square rounded-xl bg-center bg-cover w-full mb-6"></div>
-      <p id="descripcion" class="text-base text-[#101418] mb-4"></p>
-      <p id="categoria" class="text-sm text-[#5c738a]"></p>
+    <main class="max-w-4xl mx-auto px-6 py-10 space-y-10" id="contenido">
+      <div>
+        <a href="shop.html" class="inline-block mb-4 text-sm text-blue-500 hover:underline">&larr; Volver al catálogo</a>
+        <h1 id="nombre" class="text-3xl font-bold mb-4">Cargando...</h1>
+        <div id="imagen" class="aspect-square rounded-xl bg-center bg-cover w-full mb-6"></div>
+        <p id="descripcion" class="text-base text-[#101418] mb-4"></p>
+        <p id="categoria" class="text-sm text-[#5c738a]"></p>
+      </div>
+
+      <div id="seccion-relacionados" class="hidden">
+        <h2 class="text-xl font-bold mb-4">También te puede interesar</h2>
+        <div id="relacionados" class="flex gap-4 flex-wrap"></div>
+      </div>
     </main>
   </body>
 </html>
