@@ -4,17 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop - SoundWell</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&family=Manrope:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script type="module">
       import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-      const supabase = createClient(
-        "https://your-project-id.supabase.co",
-        "your-anon-key"
-      );
+      const supabase = createClient("https://your-project-id.supabase.co", "your-anon-key");
 
       const contenedor = document.getElementById("contenedor-productos");
-      const filtroInput = document.getElementById("filtro");
+      const botonesFiltro = document.querySelectorAll(".filtro-boton");
 
       async function cargarProductos(filtro = "") {
         let query = supabase.from("productos").select("*");
@@ -23,18 +22,13 @@
         }
         const { data, error } = await query;
         if (error) return console.error(error);
-
         contenedor.innerHTML = "";
-
         data.forEach((p) => {
           const card = document.createElement("a");
           card.href = `producto.html?producto=${p.slug}`;
           card.className = "flex flex-col gap-4 rounded-lg min-w-60 w-full sm:w-60";
           card.innerHTML = `
-            <div
-              class="aspect-square bg-cover bg-center rounded-xl"
-              style="background-image: url('${p.imagen_url}')"
-            ></div>
+            <div class="aspect-square bg-cover bg-center rounded-xl" style="background-image: url('${p.imagen_url}')"></div>
             <div>
               <p class="text-[#101418] text-base font-medium leading-normal">${p.nombre}</p>
               <p class="text-[#5c738a] text-sm font-normal leading-normal">${p.descripcion}</p>
@@ -46,26 +40,56 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         cargarProductos();
-
-        filtroInput.addEventListener("change", (e) => {
-          cargarProductos(e.target.value);
+        botonesFiltro.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            botonesFiltro.forEach((b) => b.classList.remove("bg-[#101418]", "text-white"));
+            btn.classList.add("bg-[#101418]", "text-white");
+            cargarProductos(btn.dataset.filter);
+          });
         });
       });
     </script>
   </head>
-  <body class="bg-gray-50 font-sans">
-    <div class="max-w-6xl mx-auto p-6">
-      <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-[#101418]">Catálogo de Productos</h1>
-        <select id="filtro" class="border rounded px-3 py-2 text-[#101418]">
-          <option value="all">Todos</option>
-          <option value="focus">Focus</option>
-          <option value="sleep">Sleep</option>
-          <option value="protect">Protect</option>
-        </select>
+  <body class="bg-gray-50 text-[#101418]" style="font-family: Manrope, 'Noto Sans', sans-serif;">
+    <header class="flex items-center justify-between border-b border-[#eaedf1] px-10 py-3">
+      <div class="flex items-center gap-4">
+        <div class="size-4">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor" /></svg>
+        </div>
+        <h2 class="text-lg font-bold tracking-[-0.015em]">SoundWell</h2>
       </div>
-      <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="flex gap-8 items-center">
+        <div class="flex gap-9">
+          <a class="text-sm font-medium" href="shop.html">Shop</a>
+          <a class="text-sm font-medium" href="#">Learn</a>
+          <a class="text-sm font-medium" href="#">Support</a>
+        </div>
+        <div class="flex gap-2">
+          <button class="rounded-full h-10 px-2.5 bg-[#eaedf1] flex items-center">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M229.66,218.34l-50.07-50.06a88.11...Z" />
+            </svg>
+          </button>
+          <button class="rounded-full h-10 px-2.5 bg-[#eaedf1] flex items-center">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M216,40H40A16,16,0...Z" />
+            </svg>
+          </button>
+        </div>
       </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold mb-4">Catálogo de Productos</h1>
+        <div class="flex flex-wrap gap-3">
+          <button class="filtro-boton px-4 py-1 rounded-full bg-[#d4dbe2] text-sm font-medium" data-filter="all">All</button>
+          <button class="filtro-boton px-4 py-1 rounded-full bg-[#d4dbe2] text-sm font-medium" data-filter="focus">Focus</button>
+          <button class="filtro-boton px-4 py-1 rounded-full bg-[#d4dbe2] text-sm font-medium" data-filter="sleep">Sleep</button>
+          <button class="filtro-boton px-4 py-1 rounded-full bg-[#d4dbe2] text-sm font-medium" data-filter="protect">Protect</button>
+        </div>
+      </div>
+      <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
     </div>
   </body>
 </html>
