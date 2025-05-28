@@ -13,7 +13,7 @@ interface Producto {
   name: string;
   description: string;
   slug: string;
-  image_url: string;
+  image_url: string[];
   category: string;
 }
 

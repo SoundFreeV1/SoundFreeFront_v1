@@ -39,12 +39,17 @@ export default function Producto() {
         </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="grid grid-cols-2 gap-4">
-            <img src={producto.image_url} alt={producto.name} className="rounded-xl w-full h-auto" />
-            <img src={producto.image_url} className="rounded-xl w-full h-auto" />
-            <img src={producto.image_url} className="rounded-xl w-full h-auto" />
-            <img src={producto.image_url} className="rounded-xl w-full h-auto" />
-          </div>
+        <div className="grid grid-cols-2 gap-4">
+        {(producto.image_url || []).map((url: string, i: number) => (
+    <img
+      key={i}
+      src={url}
+      alt={`${producto.name} ${i + 1}`}
+      className="rounded-xl w-full h-auto"
+    />
+  ))}
+</div>
+
 
           <div>
             <h1 className="text-3xl font-bold mb-4">{producto.name}</h1>
