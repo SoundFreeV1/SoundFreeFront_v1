@@ -10,7 +10,7 @@ const Header: React.FC = () => {
             <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor" />
           </svg>
         </div>
-        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em]">SoundWell</h2>
+        <h2 className="text-lg font-bold leading-tight tracking-[-0.015em]">SoundOff</h2>
       </Link>
 
       <div className="flex flex-1 justify-end gap-8">

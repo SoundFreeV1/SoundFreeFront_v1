@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { ProductCard } from "../components/ProductCard";
 import { createClient } from "@supabase/supabase-js";
+import { ShieldCheck, Moon, Headphones } from "lucide-react";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL!,
@@ -69,7 +70,7 @@ const Home: React.FC = () => {
                       Find your focus
                     </h1>
                     <h2 className="text-sm @[480px]:text-base font-normal leading-normal">
-                      SoundWell earplugs are designed to help you focus, sleep, and protect your hearing in any environment.
+                      SoundOff earplugs are designed to help you focus, sleep, and protect your hearing in any environment.
                     </h2>
                   </div>
                   <Link
@@ -85,8 +86,8 @@ const Home: React.FC = () => {
         </section>
 
         <section className="bg-white py-10">
-          <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-2xl font-bold mb-6">Featured Products</h2>
+        <div className="max-w-[960px] mx-auto px-6">
+        <h2 className="text-2xl font-bold mb-6">Featured Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {destacados.map((producto) => (
                 <ProductCard key={producto.id} {...producto} />
@@ -94,6 +95,47 @@ const Home: React.FC = () => {
             </div>
           </div>
         </section>
+
+
+        <section className="bg-white py-10">
+        <div className="max-w-[960px] mx-auto px-6">
+        <h2 className="text-2xl font-bold mb-2">Experience the difference</h2>
+    <p className="text-[#5c738a] mb-8">
+      SoundOff earplugs are engineered with advanced noise reduction technology to provide superior comfort and performance.
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+      <div className="border rounded-xl p-6 shadow-sm">
+        <ShieldCheck className="w-6 h-6 text-[#101418] mb-4" />
+        <h3 className="text-lg font-semibold mb-1">Superior Noise Reduction</h3>
+        <p className="text-sm text-[#5c738a]">
+          Our earplugs block out unwanted noise while allowing you to hear essential sounds.
+        </p>
+      </div>
+
+      <div className="border rounded-xl p-6 shadow-sm">
+        <Moon className="w-6 h-6 text-[#101418] mb-4" />
+        <h3 className="text-lg font-semibold mb-1">All–Night Comfort</h3>
+        <p className="text-sm text-[#5c738a]">
+          Made with soft, flexible materials for a comfortable fit all night long.
+        </p>
+      </div>
+
+      <div className="border rounded-xl p-6 shadow-sm">
+        <Headphones className="w-6 h-6 text-[#101418] mb-4" />
+        <h3 className="text-lg font-semibold mb-1">Versatile Use</h3>
+        <p className="text-sm text-[#5c738a]">
+          Perfect for studying, sleeping, traveling, and more.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
 
         <section className="bg-[#f7f9fc] py-10">
           <div className="max-w-4xl mx-auto px-6 text-center">

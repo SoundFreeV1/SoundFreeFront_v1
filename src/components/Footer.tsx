@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="flex flex-wrap justify-center gap-4">
           </div>
-          <p className="text-[#5c738a] text-base font-normal">@2025 SoundWell. All rights reserved.</p>
+          <p className="text-[#5c738a] text-base font-normal">@2025 SoundOff. All rights reserved.</p>
         </div>
       </div>
     </footer>
